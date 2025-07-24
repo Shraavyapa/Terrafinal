@@ -1,0 +1,62 @@
+name: Terraform Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  terraform:
+    runs-on: self-hosted
+    environment: CI/CD-pipeline
+
+    steps:
+      - name: Install Azure CLI
+        run: |
+          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          auth-type: IDENTITY
+          client-id: ${{ secrets.ARM_CLIENT_ID }}
+          tenant-id: ${{ secrets.ARM_TENANT_ID }}
+          subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+
+      # - name: Set subscription
+      #   run: az account set --subscription ${{ secrets.ARM_SUBSCRIPTION_ID }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install unzip
+        run: sudo apt-get update && sudo apt-get install -y unzip
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.0
+
+      - name: Terraform Init
+        run: terraform init
+
+
+      - name: Terraform Validate
+        run: terraform validate
+
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve tfplan
+
+
+      - name: Terraform Output
+        run: terraform output
+ 
