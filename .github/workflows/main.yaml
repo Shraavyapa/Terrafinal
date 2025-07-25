@@ -63,4 +63,4 @@ jobs:
 
       - name: Terraform Output
         shell: powershell
-        run: terraform output
+        run: terraform output  
