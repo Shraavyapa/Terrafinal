@@ -49,7 +49,7 @@ resource "azurerm_network_interface" "nic" {
  
 # VM creation
 resource "azurerm_windows_virtual_machine" "vm" {
-  name                = "myWindowsVMfinal"
+  name                = "myWindowsVMex"
   resource_group_name = data.azurerm_resource_group.existing.name
   location            = data.azurerm_resource_group.existing.location
   size                = "Standard_D2s_v3"
