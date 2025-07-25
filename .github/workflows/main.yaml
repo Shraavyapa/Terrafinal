@@ -26,11 +26,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install unzip manually (Windows)
+      - name: Download and install 7-Zip
         shell: powershell
         run: |
-          Invoke-WebRequest "https://www.info-zip.org/pub/infozip/win32/unz600xn.exe" -OutFile "$env:TEMP\unzip.exe"
-          Start-Process "$env:TEMP\unzip.exe" -ArgumentList "/S" -Wait
+          Invoke-WebRequest https://www.7-zip.org/a/7z1900-x64.exe -OutFile "$env:TEMP\7zsetup.exe"
+          Start-Process "$env:TEMP\7zsetup.exe" -ArgumentList "/S" -Wait
+
 
 
       - name: Set up Node.js
