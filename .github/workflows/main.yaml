@@ -11,9 +11,8 @@ jobs:
     environment: CI/CD-pipeline  
 
     steps:
-      - name: Install Azure CLI
-        run: |
-          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+      - name: Verify Azure CLI
+        run: az --version
 
       - name: Azure login
         uses: azure/login@v2
