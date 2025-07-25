@@ -8,7 +8,7 @@ on:
 jobs:
   terraform:
     runs-on: self-hosted
-    environment: CI/CD-pipeline
+    environment: CI/CD-pipeline  
 
     steps:
       - name: Install Azure CLI
