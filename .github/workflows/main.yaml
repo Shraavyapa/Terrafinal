@@ -56,7 +56,18 @@ jobs:
         shell: powershell
         run: terraform plan -out=tfplan
 
+      - name: Debug - Check if plan file exists
+        shell: powershell
+        run: |
+         if (Test-Path tfplan) {
+          Write-Host "✅ tfplan file exists."
+           } else {
+           Write-Error "❌ tfplan file not found!"
+            }
+
+
       - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
         shell: powershell
         run: terraform apply -auto-approve tfplan
 
