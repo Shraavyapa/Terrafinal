@@ -45,19 +45,15 @@ jobs:
           terraform_version: 1.6.0
 
       - name: Terraform Init
-        shell: powershell
         run: terraform init
 
       - name: Terraform Validate
-        shell: powershell
         run: terraform validate
 
       - name: Terraform Plan
-        shell: powershell
         run: terraform plan -out=tfplan
 
       - name: Debug - Check if plan file exists
-        shell: powershell
         run: |
          if (Test-Path tfplan) {
           Write-Host "✅ tfplan file exists."
@@ -68,9 +64,7 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
-        shell: powershell
         run: terraform apply -auto-approve tfplan
 
       - name: Terraform Output
-        shell: powershell
         run: terraform output  
