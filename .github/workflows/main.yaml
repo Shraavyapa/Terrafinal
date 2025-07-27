@@ -10,19 +10,14 @@ jobs:
     runs-on: self-hosted
     environment: CI/CD-pipeline
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      # From here on, use terramain as working directory
-      - name: Set working directory for Terraform steps
-        run: echo "Setting defaults — handled below via YAML"
-
     defaults:
       run:
         working-directory: terramain
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Verify Terraform
         run: terraform -version
 
