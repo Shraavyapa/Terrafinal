@@ -10,6 +10,14 @@ jobs:
     runs-on: self-hosted
     environment: CI/CD-pipeline
 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # From here on, use terramain as working directory
+      - name: Set working directory for Terraform steps
+        run: echo "Setting defaults — handled below via YAML"
+
     defaults:
       run:
         working-directory: terramain
@@ -29,10 +37,6 @@ jobs:
           client-id: ${{ secrets.ARM_CLIENT_ID }}
           tenant-id: ${{ secrets.ARM_TENANT_ID }}
           subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-
-      - name: Checkout code
-        uses: actions/checkout@v3
-        # NOTE: checkout should run outside 'terramain', so move this step above if needed.
 
       - name: Terraform Init
         shell: powershell
@@ -54,4 +58,3 @@ jobs:
       - name: Terraform Output
         shell: powershell
         run: terraform output
-
