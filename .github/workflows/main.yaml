@@ -8,7 +8,11 @@ on:
 jobs:
   terraform:
     runs-on: self-hosted
-    environment: CI/CD-pipeline  
+    environment: CI/CD-pipeline
+
+    defaults:
+      run:
+        working-directory: terramain
 
     steps:
       - name: Verify Terraform
@@ -28,6 +32,7 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v3
+        # NOTE: checkout should run outside 'terramain', so move this step above if needed.
 
       - name: Terraform Init
         shell: powershell
@@ -49,3 +54,4 @@ jobs:
       - name: Terraform Output
         shell: powershell
         run: terraform output
+
